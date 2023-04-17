@@ -30,12 +30,10 @@ const GraphCanvas = () => {
       graph.destroyLayout()
     })
 
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const showDialog = () => {
       dialogRef.showModal()
     }
 
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const exportFile = (filename: string, content: string) => {
       const blob = new Blob([content], { type: 'text/plain;charset=utf-8' })
       const url = URL.createObjectURL(blob)
@@ -53,6 +51,8 @@ const GraphCanvas = () => {
         URL.revokeObjectURL(url)
       }, 100)
     }
+
+    window.dispatchEvent(new CustomEvent('Keep Variables', { detail: { showDialog, exportFile } }))
 
     const listener = (event: CustomEvent<{ code: string }>) => {
       // eslint-disable-next-line no-eval
