@@ -1,0 +1,32 @@
+要实现这个功能，我们需要先对用户节点进行一些处理，计算每个用户发帖的数量，并将其保存在节点的 size 属性中。代码如下：
+
+```js
+// 遍历所有节点
+graphData.nodes.forEach(node => {
+  // 如果是用户节点
+  if (node.type === 'User') {
+    // 计算该用户发帖的数量
+    const postCount = graphData.edges.filter(edge => edge.type === 'POSTED' && edge.source === node.id).length;
+    // 将发帖数量保存在节点的 size 属性中
+    node.size = postCount;
+  }
+});
+
+// 根据节点的 size 属性设置节点的大小
+const maxSize = 50; // 最大的节点大小
+const minSize = 20; // 最小的节点大小
+graphData.nodes.forEach(node => {
+  // 如果是用户节点
+  if (node.type === 'User') {
+    // 根据发帖数计算节点大小
+    const size = minSize + (maxSize - minSize) * (node.size / 10);
+    // 设置节点的 size 属性
+    node.size = size;
+  }
+});
+
+// 更新图形
+graph.changeData(graphData);
+```
+
+在这里，我们首先遍历所有节点，计算每个用户发帖的数量，并将其保存在节点的 size 属性中。然后，我们再次遍历所有节点，根据节点的 size 属性设置节点的大小。在这里，我们设置了最大的节点大小为 50，最小的节点大小为 20，发帖数量超过 10 的节点大小会达到最大值，发帖数量为 0 的节点大小会达到最小值。最后，我们通过 graph.changeData 更新图形。

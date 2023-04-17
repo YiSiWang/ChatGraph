@@ -1,0 +1,24 @@
+我们可以使用 exportFile 函数来导出 CSV 文件，然后使用 sort 方法按发帖数由大到小排序。代码如下：
+
+```js
+// 将用户节点转换为表格数据
+const tableData = graphData.nodes
+  .filter(node => node.type === 'User')
+  .map(node => {
+    return {
+      name: node.name,
+      age: node.age,
+      gender: node.gender,
+      postCount: graphData.edges.filter(edge => edge.type === 'POSTED' && edge.source === node.id).length,
+    };
+  });
+
+// 按发帖数排序
+tableData.sort((a, b) => b.postCount - a.postCount);
+
+// 导出 CSV 文件
+const content = "姓名,年龄,性别,发帖数\n" + tableData.map(row => `${row.name},${row.age},${row.gender},${row.postCount}`).join('\n');
+exportFile('data.csv', content);
+```
+
+在这里，我们首先将用户节点转换为表格数据，然后使用 sort 方法按发帖数由大到小排序。最后，我们将表格数据转换为 CSV 格式的字符串，并调用 exportFile 函数导出 CSV 文件。

@@ -1,0 +1,32 @@
+你可以通过修改每个节点的 style 属性来实现节点颜色的修改，具体代码如下：
+
+```js
+graphData.nodes.forEach(node => {
+  switch (node.type) {
+    case 'User':
+      node.style = {
+        fill: '#91d5ff',
+        stroke: '#40a9ff',
+      };
+      break;
+    case 'Post':
+      node.style = {
+        fill: '#b7eb8f',
+        stroke: '#7cb305',
+      };
+      break;
+    case 'Comment':
+      node.style = {
+        fill: '#ffd591',
+        stroke: '#faad14',
+      };
+      break;
+    default:
+      break;
+  }
+});
+
+graph.changeData(graphData);
+```
+
+在这里，我们通过遍历每个节点，并根据其类型设置不同的颜色。注意，这里我们直接修改了 graphData 中每个节点的 style 属性，然后通过 graph.changeData 更新了图形。

@@ -1,0 +1,40 @@
+我们可以使用 Tabulator 库来渲染表格，代码如下：
+
+```js
+// 创建表格实例
+const table = new Tabulator("#dialog-container", {
+  layout: "fitColumns",
+  data: graphData.nodes.filter(node => node.type === 'User').map(node => {
+    // 过滤掉不是用户节点的节点，然后将节点转换为表格数据
+    return {
+      name: node.name,
+      age: node.age,
+      gender: node.gender,
+      postCount: graphData.edges.filter(edge => edge.type === 'POSTED' && edge.source === node.id).length,
+    };
+  }),
+  columns: [
+    { title: "姓名", field: "name", align: "center" },
+    { title: "年龄", field: "age", align: "center" },
+    { title: "性别", field: "gender", align: "center" },
+    {
+      title: "发帖数",
+      field: "postCount",
+      align: "center",
+      formatter: "progress",
+      formatterParams: {
+        color: "#1890ff",
+        min: 0,
+        max: 10,
+        legend: true,
+        legendAlign: "right",
+      },
+    },
+  ],
+});
+
+// 显示弹窗
+showDialog();
+```
+
+在这里，我们首先使用 filter 方法过滤掉不是用户节点的节点，然后将每个节点转换为表格数据。在表格中，我们显示了用户的姓名、年龄、性别和发帖数，其中发帖数使用了 Tabulator 提供的进度条格式化器。在这里，我们设置了进度条的最小值为 0，最大值为 10，进度条的颜色为蓝色。最后，我们调用了 showDialog 方法显示弹窗。

@@ -79,7 +79,7 @@ export default () => {
   }, 300, false, true)
 
   const instantToBottom = () => {
-    window.scrollTo({ top: document.body.scrollHeight, behavior: 'instant' })
+    window.scrollTo({ top: document.body.scrollHeight, behavior: 'auto' })
   }
 
   const requestWithLatestMessage = async() => {

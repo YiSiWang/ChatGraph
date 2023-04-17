@@ -3,6 +3,7 @@ module.exports = {
   rules: {
     'no-console': ['error', { allow: ['error'] }],
     'react/display-name': 'off',
+    'react/jsx-key': 'off',
     'react-hooks/rules-of-hooks': 'off',
     '@typescript-eslint/no-use-before-define': 'off',
   },

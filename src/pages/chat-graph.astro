@@ -1,0 +1,39 @@
+---
+import Layout from '../layouts/Layout.astro'
+import GraphCanvas from '../components/GraphCanvas'
+import ChatContainer from '../components/ChatContainer';
+---
+
+<Layout title="Graph and Chat" scripts={[
+  'https://www.unpkg.com/@antv/g6@4.8.9/dist/g6.min.js',
+  'https://www.unpkg.com/@antv/g2plot@2.4.29/dist/g2plot.min.js',
+  'https://unpkg.com/tabulator-tables@5.4.4/dist/js/tabulator.min.js',
+]} styles={[
+  'https://unpkg.com/tabulator-tables@5.4.4/dist/css/tabulator.min.css',
+]}>
+  <main class="h-screen flex">
+    <section class="graph-canvas-container flex-1">
+      <GraphCanvas client:load />
+    </section>
+    <ChatContainer client:load />
+  </main>
+</Layout>
+
+<script>
+  async function checkCurrentAuth() {
+    const password = localStorage.getItem('pass')
+    const response = await fetch('/api/auth', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        pass: password,
+      }),
+    })
+    const responseJson = await response.json()
+    if (responseJson.code !== 0)
+      window.location.href = '/password'
+  }
+  checkCurrentAuth()
+</script>

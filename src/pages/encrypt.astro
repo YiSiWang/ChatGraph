@@ -1,0 +1,50 @@
+---
+import Layout from '../layouts/Layout.astro'
+---
+
+<Layout title="Encrypt">
+  <main class="mx-auto max-w-3xl">
+    <h1 class="mb-4">Encrypt</h1>
+    <div class="input-container">
+      <label for="key" class="mb-2">Key</label>
+      <input id="key" class="w-full p-2 mb-4 border" type="text" />
+    </div>
+    <div class="input-container">
+      <label for="text" class="mb-2">Text</label>
+      <textarea id="text" class="w-full p-2 mb-4 border"></textarea>
+    </div>
+    <button id="button" class="bg-blue-500 text-white py-2 px-4 rounded cursor-pointer">Encrypt</button>
+    <div class="output-container mt-4">
+      <label for="output" class="mb-2">Encrypted Text</label>
+      <textarea id="output" class="w-full p-2 border" readonly></textarea>
+    </div>
+  </main>
+</Layout>
+
+<script>
+  const keyInput = document.getElementById('key') as HTMLInputElement
+  const textInput = document.getElementById('text') as HTMLInputElement
+  const output = document.getElementById('output') as HTMLTextAreaElement
+  const button = document.getElementById('button') as HTMLButtonElement
+
+  async function encrypt() {
+    const key = keyInput.value
+    const text = textInput.value
+
+    const response = await fetch('/api/encrypt', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        key,
+        text,
+      }),
+    })
+
+    const encryptedText = await response.text()
+    output.value = encryptedText
+  }
+
+  button.onclick = encrypt
+</script>

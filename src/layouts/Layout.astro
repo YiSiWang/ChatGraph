@@ -1,9 +1,11 @@
 ---
 export interface Props {
   title: string;
+  scripts?: string[];
+  styles?: string[];
 }
 
-const { title } = Astro.props;
+const { title, scripts = [], styles = [] } = Astro.props;
 ---
 
 <!DOCTYPE html>
@@ -17,7 +19,13 @@ const { title } = Astro.props;
     <meta name="theme-color" content="#212129">
     <meta name="generator" content={Astro.generator}>
     <title>{title}</title>
-    <meta name="description" content="A simple blog">
+    <meta name="description" content="A site for AI analyzing">
+    {scripts.map(url => (
+      <script type="text/javascript" src={url} />
+    ))}
+    {styles.map(url => (
+      <link href={url} rel="stylesheet">
+    ))}
     {
       import.meta.env.HEAD_SCRIPTS
         ? (
@@ -43,9 +51,6 @@ const { title } = Astro.props;
   :root {
     --c-bg: #fbfbfb;
     --c-fg: #444444;
-    --c-scroll: #d9d9d9;
-    --c-scroll-hover: #bbbbbb;
-    scrollbar-color: var(--c-scrollbar) var(--c-bg);
   }
 
   html {
@@ -57,29 +62,6 @@ const { title } = Astro.props;
   html.dark {
     --c-bg: #212129;
     --c-fg: #ddddf0;
-    --c-scroll: #333333;
-    --c-scroll-hover: #555555;
-  }
-
-  main {
-    max-width: 70ch;
-    margin: 0 auto;
-    padding: 6rem 2rem 4rem;
-  }
-
-  ::-webkit-scrollbar {
-    width: 6px;
-    height: 6px;
-  }
-  ::-webkit-scrollbar-thumb {
-    background-color: var(--c-scroll);
-    border-radius: 4px;
-  }
-  ::-webkit-scrollbar-thumb:hover {
-    background-color: var(--c-scroll-hover);
-  }
-  ::-webkit-scrollbar-track {
-    background-color: var(--c-bg);
   }
 </style>
 
