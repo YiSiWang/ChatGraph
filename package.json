@@ -22,7 +22,6 @@
     "aes-js": "^3.1.2",
     "astro": "^2.0.15",
     "chance": "^1.1.11",
-    "crypto-js": "^4.1.1",
     "eslint": "^8.36.0",
     "eventsource-parser": "^0.1.0",
     "highlight.js": "^11.7.0",
