@@ -1,12 +1,15 @@
-import AES from 'crypto-js/aes'
-import Utf8 from 'crypto-js/enc-utf8'
+import aesjs from 'aes-js'
 
-export function encrypt(key, text) {
-  const encrypted = AES.encrypt(text, key)
-  return encrypted.toString()
+export function encrypt(key: string, text: string) {
+  // eslint-disable-next-line new-cap
+  const aesCtr = new aesjs.ModeOfOperation.ctr(aesjs.utils.hex.toBytes(key))
+  const encryptedBytes = aesCtr.encrypt(aesjs.utils.utf8.toBytes(text))
+  return aesjs.utils.hex.fromBytes(encryptedBytes)
 }
 
-export function decrypt(key, text) {
-  const decrypted = AES.decrypt(text, key)
-  return decrypted.toString(Utf8)
+export function decrypt(key: string, text: string) {
+  // eslint-disable-next-line new-cap
+  const aesCtr = new aesjs.ModeOfOperation.ctr(aesjs.utils.hex.toBytes(key))
+  const decryptedBytes = aesCtr.decrypt(aesjs.utils.hex.toBytes(text))
+  return aesjs.utils.utf8.fromBytes(decryptedBytes)
 }
